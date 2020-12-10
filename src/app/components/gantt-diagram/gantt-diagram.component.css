@@ -1,0 +1,5 @@
+.gantt-container {
+  border: 1px solid gray;
+  margin: 25px;
+  max-width: 100%;
+}

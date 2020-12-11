@@ -1,71 +1,23 @@
-import { AfterViewInit, Component, ElementRef, } from '@angular/core';
-import * as Gantt from '../../../../node_modules/frappe-gantt/src/index';
-
+import { ThemeService } from "ng2-charts";
+import { TasksService } from "./../../services/tasks.service";
+import { AfterViewInit, Component, OnInit } from "@angular/core";
+import * as Gantt from "../../../../node_modules/frappe-gantt/src/index";
 
 @Component({
-  selector: 'app-gantt-diagram',
-  templateUrl: './gantt-diagram.component.html',
-  styleUrls: ['./gantt-diagram.component.css']
+  selector: "app-gantt-diagram",
+  templateUrl: "./gantt-diagram.component.html",
+  styleUrls: ["./gantt-diagram.component.css"],
 })
-
-export class GanttDiagramComponent implements AfterViewInit {
-  tasks = [{
-    id: 'Task 1',
-    name: 'Redesign website',
-    start: '2020-12-01',
-    end: '2020-12-04',
-    progress: 100,
-    dependencies: '',
-  },
-  {
-    id: 'Task 2',
-    name: 'Version upgrade',
-    start: '2020-12-07',
-    end: '2020-12-11',
-    progress: 75,
-    dependencies: 'Task 1',
-  },
-  {
-    id: 'Task 3',
-    name: 'Translate texts',
-    start: '2020-12-04',
-    end: '2020-12-10',
-    progress: 50,
-    dependencies: '',
-  },
-  {
-    id: 'Task 4',
-    name: 'Auth0 integration',
-    start: '2020-12-12',
-    end: '2020-12-18',
-    progress: 0,
-    dependencies: 'Task 2',
-  },
-  {
-    id: 'Task 5',
-    name: 'Bug Fixing',
-    start: '2020-12-14',
-    end: '2020-12-23',
-    progress: 0,
-    dependencies: 'Task 4',
-  },
-  {
-    id: 'Task 6',
-    name: 'Deployment',
-    start: '2021-01-04',
-    end: '2021-01-05',
-    progress: 0,
-    dependencies: 'Task 5',
-  }];
-  gantt;
+export class GanttDiagramComponent implements AfterViewInit, OnInit {
+  task: any;
 
   VIEW_MODE = {
-    QUARTER_DAY: 'Quarter Day',
-    HALF_DAY: 'Half Day',
-    DAY: 'Day',
-    WEEK: 'Week',
-    MONTH: 'Month',
-    YEAR: 'Year'
+    QUARTER_DAY: "Quarter Day",
+    HALF_DAY: "Half Day",
+    DAY: "Day",
+    WEEK: "Week",
+    MONTH: "Month",
+    YEAR: "Year",
   };
 
   op = {
@@ -77,19 +29,20 @@ export class GanttDiagramComponent implements AfterViewInit {
     bar_corner_radius: 3,
     arrow_curve: 5,
     padding: 18,
-    view_mode: 'Week',
-    date_format: 'YYYY-MM-DD',
-    popup_trigger: 'click',
+    view_mode: "Week",
+    date_format: "YYYY-MM-DD",
+    popup_trigger: "click",
     custom_popup_html: null,
-    language: 'en'
-}
+    language: "en",
+  };
 
-  constructor() {}
+  constructor(private tasks: TasksService) {}
+
+  ngOnInit(): void {
+    this.task = this.tasks.getTasks();
+  }
 
   ngAfterViewInit(): void {
-    this.gantt = new Gantt.default('#gantt', this.tasks, this.op);
+    new Gantt.default("#gantt", this.task, this.op);
   }
-
-
-  }
-
+}

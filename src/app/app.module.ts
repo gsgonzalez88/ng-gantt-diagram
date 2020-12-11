@@ -8,6 +8,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { TasksService } from './services/tasks.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule,
     BrowserAnimationsModule,
   ],
-  providers: [ThemeService],
+  providers: [ThemeService, TasksService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
